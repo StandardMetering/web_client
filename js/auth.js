@@ -3,6 +3,7 @@
 let API_KEY = "AIzaSyBlG0DgcKrot1t_nKo8n3cU20oDlZqmHD4";
 let CLIENT_ID = "438678561117-04vl6pt423vtr7dkmg5jc4mfbknna387.apps.googleusercontent.com";
 var GoogleAuth;
+var currentUser;
 let SCOPE = "https://www.googleapis.com/auth/drive.metadata.readonly";
 let standardMeteringURL = "localhost:63342";
 let standardMeteringAuthEndpoint = "/api/user/info";
@@ -25,10 +26,17 @@ function initClient() {
     GoogleAuth = gapi.auth2.getAuthInstance();
     GoogleAuth.isSignedIn.listen(updateSignInStatus);
     GoogleAuth.signOut();
+    currentUser = null;
+    $("#sign-in-button").on( "click", signInButtonClicked);
   } );
 }
 
 function updateSignInStatus(isSignedIn) {
+
+  if(!isSignedIn) {
+    return;
+  }
+
   let user = GoogleAuth.currentUser.get();
 
   if( user ) {
@@ -59,11 +67,28 @@ function handleAuthResponse() {
   console.log(jsonData);
 
   if(jsonData.accepted) {
-    $("#user_displayName").html(jsonData.data.display_name);
+    handleNewUser(jsonData.data);
+    currentUser = jsonData.data;
+    currentUser.id_token = GoogleAuth.currentUser.get().getAuthResponse().id_token;
+
+    let signInButton =  $("#sign-in-button");
+    signInButton.html(jsonData.data.display_name);
+    signInButton.on( "click", signOutButtonClicked);
   }
 }
 
+function signOutButtonClicked() {
+  GoogleAuth.signOut();
+  currentUser = null;
+  let signInButton =  $("#sign-in-button");
+  signInButton.html("Sign In");
+  signInButton.on( "click", signInButtonClicked);
+}
 
 function signInButtonClicked() {
     GoogleAuth.signIn();
+}
+
+function getCurrentUser() {
+  return currentUser;
 }

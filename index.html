@@ -13,9 +13,15 @@
 
 	</head>
 	<body>
-		<h2 class="title">Standard Metering</h2>
-        <button onclick="signInButtonClicked()" id="sign-in-button">Sign In</button>
-        <div id="user_displayName"></div>
+        <div class="nav-bar">
+			<img class="logo" src="/img/CantaloupeMeter.png"/>
+            <span class="title">Standard Metering</span>
+            <button id="sign-in-button" class="sign-in-button">Sign In</button>
+        </div>
+
+        <div class="admin-functions">
+            <button id="get-all-installs" onclick="getAllInstallsPressed()">Get All Installs</button>
+        </div>
 
         <script async defer src="https://apis.google.com/js/api.js"
                 onload="this.onload=function(){};handleClientLoad()"

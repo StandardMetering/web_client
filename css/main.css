@@ -1,3 +1,42 @@
-.title {
-	color: #ff8802;
+body {
+    margin: 0;
+}
+
+.nav-bar {
+    height: 80px;
+    display: inline-block;
+	padding: 5px;
+	background-color: #ffcc66;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.nav-bar .title {
+	color: black;
+    font-family: "Lucida Grande", Lucida, sans-serif;
+    font-size: 25px;
+}
+
+.nav-bar .logo {
+    vertical-align: middle;
+	height: 75px;
+	width: 75px;
+}
+
+.nav-bar .sign-in-button {
+    float: right;
+    vertical-align: middle;
+    margin: 20px 20px;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    padding: 7px 12px;
+    text-align: center;
+    display: inline-block;
+}
+
+.admin-functions {
+    visibility: hidden;
+    margin-top: 10px;
+    text-align: center;
 }
